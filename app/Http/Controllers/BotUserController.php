@@ -21,7 +21,7 @@ class BotUserController extends Controller
             if ($text === '/start') {
                 Telegram::sendMessage([
                     'chat_id' => $chatId,
-                    'text' => "Assalomu alaykum\nBizning qo'llab-quvvatlash botimizga xush kelibsiz! Har qanday savolingizni yozib qoldiring. Jamoamiz tez orada sizga javob beradi.",
+                    'text' => "Assalomu alaykum\nBizning qo'llab-quvvatlash botimizga xush kelibsiz! Har qanday savolingizni yozib qoldiring. Jamoamiz tez orada sizga javob beradi. ".$chatId,
                     'parse_mode' => 'HTML',
                 ]);
                 return;
