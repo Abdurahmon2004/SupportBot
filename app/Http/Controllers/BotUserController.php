@@ -16,11 +16,6 @@ class BotUserController extends Controller
         $chatId = $update['message']['chat']['id'] ?? $update['callback_query']['message']['chat']['id'] ?? null;
         $text = $update['message']['text'] ?? null;
         $messageId = $update['message']['message_id'] ?? null;
-        Telegram::sendMessage([
-            'chatId'=>$chatId,
-            'text'=>'Assalomu alaykum',
-        ]);
-        Log::info($chatId.'salom');
         // Foydalanuvchining birinchi xabari (private chat)
         if (isset($update['message']['chat']['type']) && $update['message']['chat']['type'] === 'private') {
             if ($text === '/start') {
