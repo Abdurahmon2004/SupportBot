@@ -18,11 +18,11 @@ class BotUserController extends Controller
         $messageId = $update['message']['message_id'] ?? null;
         // Foydalanuvchining birinchi xabari (private chat)
         if (isset($update['message']['chat']['type']) && $update['message']['chat']['type'] === 'private') {
-           
+            $admin = DB::table('accepted_messages')->where('admin_chat_id', $chatId)->first() ?? 1;
             if ($text === '/start') {
                 Telegram::sendMessage([
                     'chat_id' => $chatId,
-                    'text' => "Assalomu alaykum\nBizning qo'llab-quvvatlash botimizga xush kelibsiz! Har qanday savolingizni yozib qoldiring. Jamoamiz tez orada sizga javob beradi. ".$chatId,
+                    'text' => "Assalomu alaykum\nBizning qo'llab-quvvatlash botimizga xush kelibsiz! Har qanday savolingizni yozib qoldiring. Jamoamiz tez orada sizga javob beradi. ".$admin,
                     'parse_mode' => 'HTML',
                 ]);
                 return;
@@ -34,7 +34,15 @@ class BotUserController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-
+            
+            // if($admin){
+            //     $userChatId = $admin->user_chat_id;
+            //     Telegram::sendMessage([
+            //         'chat_id'=>$userChatId,
+            //         'text'=> $text,
+            //     ]);
+            //     return;
+            // }
             // Guruhga xabarni forward qilish
             Telegram::sendMessage([
                 'chat_id' => -4796380741, // Guruh ID
