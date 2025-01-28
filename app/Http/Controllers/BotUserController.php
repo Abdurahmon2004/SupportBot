@@ -28,6 +28,16 @@ class BotUserController extends Controller
                 ]);
                 return;
             }
+            $user = DB::table('accepted_messages')->where('user_chat_id', $chatId)->first();
+            if ($user) {
+                $admin_chat_id = $user->admin_chat_id;
+                Telegram::sendMessage([
+                    'chat_id' => $admin_chat_id,
+                    'text' => $text,
+                    'parse_mode' => 'HTML',
+                ]);
+                return;
+            }
             if ($text === '/start') {
                 Telegram::sendMessage([
                     'chat_id' => $chatId,
@@ -44,14 +54,6 @@ class BotUserController extends Controller
                 'updated_at' => now(),
             ]);
             
-            // if($admin){
-            //     $userChatId = $admin->user_chat_id;
-            //     Telegram::sendMessage([
-            //         'chat_id'=>$userChatId,
-            //         'text'=> $text,
-            //     ]);
-            //     return;
-            // }
             // Guruhga xabarni forward qilish
             Telegram::sendMessage([
                 'chat_id' => -4796380741, // Guruh ID
