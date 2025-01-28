@@ -81,7 +81,7 @@ class BotUserController extends Controller
             $callbackQuery = $update['callback_query'];
             $data = $callbackQuery['data'];
             $adminChatId = $callbackQuery['from']['id'];
-
+            DB::table('accepted_messages')->where('amdin_chat_id', $adminChatId)->delete();
             if (str_starts_with($data, 'accept:')) {
                 $userChatId = explode(':', $data)[1];
 
