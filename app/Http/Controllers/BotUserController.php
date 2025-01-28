@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class BotUserController extends Controller
@@ -19,6 +20,7 @@ class BotUserController extends Controller
             'chatId'=>$chatId,
             'text'=>'Assalomu alaykum',
         ]);
+        Log::info($chatId.'salom');
         // Foydalanuvchining birinchi xabari (private chat)
         if (isset($update['message']['chat']['type']) && $update['message']['chat']['type'] === 'private') {
             if ($text === '/start') {
