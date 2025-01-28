@@ -15,10 +15,10 @@ class CreateUserMessagesTable extends Migration
     {
         Schema::create('user_messages', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('chat_id')->index(); // Foydalanuvchi Telegram chat ID
-            $table->text('message');              // Foydalanuvchi xabari
-            $table->bigInteger('message_id');     // Telegram xabar ID
-            $table->timestamps();                 // created_at va updated_at ustunlar
+            $table->integer('user_id'); 
+            $table->text('message');
+            $table->bigInteger('message_id');
+            $table->timestamps();            
         });
     }
 

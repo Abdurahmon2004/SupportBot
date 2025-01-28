@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('bot_users', function (Blueprint $table) {
             $table->id();
+            $table->string('chat_id')->nullable();
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
