@@ -61,6 +61,7 @@ class BotUserController extends Controller
             
             // Guruhga xabarni forward qilish
            if($botUSer->status == 0){
+            $botUSer->update(['status'=>1]);
             Telegram::sendMessage([
                 'chat_id' => -4796380741, // Guruh ID
                 'text' => "Yangi murojaat kelib tushdi:\n\n<b>Foydalanuvchi:</b> $chatId\n<b>Xabar:</b> $text",
