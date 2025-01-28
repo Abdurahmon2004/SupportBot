@@ -18,7 +18,7 @@ class BotUserController extends Controller
         $messageId = $update['message']['message_id'] ?? null;
         // Foydalanuvchining birinchi xabari (private chat)
         if (isset($update['message']['chat']['type']) && $update['message']['chat']['type'] === 'private') {
-            $admin = DB::table('accepted_messages')->where('admin_chat_id', $chatId)->first() ?? 1;
+            $admin = DB::table('accepted_messages')->where('admin_chat_id', $chatId)->first()->admin_chat_id ?? 1;
             if ($text === '/start') {
                 Telegram::sendMessage([
                     'chat_id' => $chatId,
