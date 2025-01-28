@@ -18,6 +18,15 @@ class BotUserController extends Controller
         $messageId = $update['message']['message_id'] ?? null;
         // Foydalanuvchining birinchi xabari (private chat)
         if (isset($update['message']['chat']['type']) && $update['message']['chat']['type'] === 'private') {
+            $admin = DB::table('user_messages')->where('admin_chat_id', $chatId)->get();
+            if($admin){
+                $userChatId = $admin->user_chat_id;
+                Telegram::sendMessage([
+                    'chat_id'=>$userChatId,
+                    'text'=> $text,
+                ]);
+                return;
+            }
             if ($text === '/start') {
                 Telegram::sendMessage([
                     'chat_id' => $chatId,
@@ -26,8 +35,6 @@ class BotUserController extends Controller
                 ]);
                 return;
             }
-
-            // Foydalanuvchi xabarini bazaga yozish
             DB::table('user_messages')->insert([
                 'chat_id' => $chatId,
                 'message' => $text,
@@ -76,28 +83,17 @@ class BotUserController extends Controller
                     'chat_id' => $adminChatId,
                     'text' => $messagesText,
                 ]);
-
+                DB::table('accepted_messages')->insert([
+                    'admin_chat_id' => $adminChatId,
+                    'user_chat_id' => $userChatId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
                 // Guruhga qabul qilindi deb xabar qilish
                 Telegram::editMessageText([
                     'chat_id' => -4796380741, // Guruh ID
                     'message_id' => $callbackQuery['message']['message_id'],
                     'text' => "Murojaat qabul qilindi va adminga yo'naltirildi.",
-                ]);
-            }
-        }
-
-        // Admin foydalanuvchiga javob yuborganda
-        if (isset($update['message']['reply_to_message'])) {
-            $replyMessage = $update['message']['reply_to_message'];
-            $originalChatId = $replyMessage['text'] ?? null;
-
-            if ($originalChatId) {
-                $replyText = $update['message']['text'];
-
-                // Foydalanuvchiga admin javobini yuborish
-                Telegram::sendMessage([
-                    'chat_id' => $originalChatId,
-                    'text' => $replyText,
                 ]);
             }
         }
