@@ -113,7 +113,7 @@ class BotUserController extends Controller
                 Telegram::editMessageText([
                     'chat_id' => -4796380741, // Guruh ID
                     'message_id' => $callbackQuery['message']['message_id'],
-                    'text' => "Murojaat qabul qilindi va adminga yo'naltirildi. \n admin: ".$adminChatId."\n Murojatchi: ".$userChatId,
+                    'text' => "Murojaat qabul qilindi va adminga yo'naltirildi. \n Admin: ".$adminChatId."\n Murojatchi: ".$userChatId,
                 ]);
             }
         }
