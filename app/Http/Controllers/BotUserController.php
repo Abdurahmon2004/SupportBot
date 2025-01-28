@@ -26,6 +26,7 @@ class BotUserController extends Controller
                     'text' => $text,
                     'parse_mode' => 'HTML',
                 ]);
+                return;
             }
             if ($text === '/start') {
                 Telegram::sendMessage([
