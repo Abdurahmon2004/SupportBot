@@ -63,7 +63,7 @@ class BotUserController extends Controller
            if($botUSer->status == 0){
             $botUSer->update(['status'=>1]);
             Telegram::sendMessage([
-                'chat_id' => -4796380741, // Guruh ID
+                'chat_id' => '@qollabturadu', // Guruh ID
                 'text' => "Yangi murojaat kelib tushdi:\n\n<b>Foydalanuvchi:</b> $chatId\n<b>Xabar:</b> $text",
                 'parse_mode' => 'HTML',
                 'reply_markup' => json_encode([
@@ -111,7 +111,7 @@ class BotUserController extends Controller
                 ]);
                 // Guruhga qabul qilindi deb xabar qilish
                 Telegram::editMessageText([
-                    'chat_id' => -4796380741, // Guruh ID
+                    'chat_id' => '@qollabturadu', // Guruh ID
                     'message_id' => $callbackQuery['message']['message_id'],
                     'text' => "Murojaat qabul qilindi va adminga yo'naltirildi. \n Admin: ".$adminChatId."\n Murojatchi: ".$userChatId,
                 ]);
